@@ -1,0 +1,25 @@
+.post-hidden .star {
+  height: 17px;
+  margin: 0px 4px -4px 8px;
+}
+
+.postContainer:not(.post-hidden) .post.reply {
+  position: relative;
+  overflow: overlay;
+  margin-right: 85px;
+}
+
+.postContainer:not(.post-hidden) .post.reply .star {
+  height: 81px;
+  position: absolute;
+  right: -80px;    
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.opContainer .star {
+  position: absolute;
+  height: 151px;
+  right: 18px;
+}
