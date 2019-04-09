@@ -1,6 +1,6 @@
 {
   "name": "Memeflag delouser",
-  "version": "1",
+  "version": "1.2",
   "manifest_version": 2,
   "description": "This extension automatically hides and marks posters who use memeflags when posting to hide their country of origin.",
   "homepage_url": "https://github.com/DelouseMemeFlags/MemeflagDelouser",

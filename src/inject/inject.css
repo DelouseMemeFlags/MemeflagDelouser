@@ -18,8 +18,16 @@
   margin: auto;
 }
 
-.opContainer .star {
+div:not(.post-hidden) > .opContainer .star {
   position: absolute;
   height: 151px;
   right: 18px;
+}
+#quote-preview .star {
+  position: absolute;
+  height: 110px;
+  right: 2px;
+}
+.half.star {
+  opacity: .3;
 }
