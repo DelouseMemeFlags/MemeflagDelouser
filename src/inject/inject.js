@@ -119,6 +119,9 @@ const extension = () => {
     }
   };
 
+  /**
+   * Quote meme IDs in comment box
+   */
   const onQuoteThem = () => {
     // toggle the reply form
     const togglePostFormLink = document.getElementById('togglePostFormLink');
