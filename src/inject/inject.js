@@ -100,13 +100,18 @@ const extension = () => {
     }
   };
 
-  const onQuoteThem = (e) => {
+  const onQuoteThem = () => {
+    // toggle the reply form
+    const togglePostFormLink = document.getElementById('togglePostFormLink');
     togglePostFormLink.firstElementChild.click();
-    const body = postForm.getElementsByTagName('textarea')[0];
+    // construct quote string
     let quoteStr = '';
     for (let i=0; i<memeFlagIDs.length; i++) {
       quoteStr += '>>' + memeFlagIDs[i] + '\n';
     }
+    // add quote to comment box
+    const postForm = document.getElementById('postForm');
+    const body = postForm.getElementsByTagName('textarea')[0];
     body.value = quoteStr;
     body.focus();
   };
