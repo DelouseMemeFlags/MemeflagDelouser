@@ -104,7 +104,10 @@ const extension = () => {
     showThemToggle = !showThemToggle;
   };
 
-  const onBringToTop = (e) => {
+  /**
+   * Bring shill posts to top
+   */
+  const onBringToTop = () => {
     const them = document.getElementsByClassName('moshe');
     const firstPost = document.getElementsByClassName('replyContainer')[0];
     const fpParent = firstPost.parentNode;
