@@ -74,7 +74,7 @@ const extension = () => {
 
     // update meme flag count
     memeFlagIDs = [...new Set(memeFlagIDs)];  // remove duplicate IDs
-    memeFlagCount.innerHTML = memeFlagIDs.length;
+    memeFlagCount.textContent = memeFlagIDs.length;
   };
 
   /**
@@ -98,7 +98,7 @@ const extension = () => {
     let label = 'Unhide Shills';
     if (showThemToggle) label = 'Hide Shills';
     for (let i=0; i<showThemLinks.length; i++) {
-      showThemLinks[i].innerHTML = label;
+      showThemLinks[i].textContent = label;
     }
     // toggle state
     showThemToggle = !showThemToggle;
@@ -150,9 +150,9 @@ const extension = () => {
     bringToTop.setAttribute('id', 'bringToTop_' + iteration);
     quoteThem.setAttribute('href', '#');
     quoteThem.setAttribute('id', 'quoteThem_' + iteration);
-    showThem.innerHTML = 'Unhide Shills';
-    bringToTop.innerHTML = 'Bring Shills to Top';
-    quoteThem.innerHTML = 'Quote Them';
+    showThem.textContent = 'Unhide Shills';
+    bringToTop.textContent = 'Bring Shills to Top';
+    quoteThem.textContent = 'Quote Them';
 
     navLinkSection.innerHTML += '[';
     navLinkSection.appendChild(showThem);
