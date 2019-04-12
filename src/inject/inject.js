@@ -4,11 +4,20 @@ const extension = () => {
   let memeFlagIDs = [];
   let showThemToggle = true;
 
+  /**
+   * Returns the closest parent node matching class name.
+   * @param {Node} node DOM Node.
+   * @param {Number} name Class name
+   * @return {?Node} The parent node or null.
+   */
   const getParentNodeByClassName = (node, name) => {
-    if (node === null || node.className.indexOf('moshe') !== -1) {
+    if (!node || !name) {
       return null;
     }
-    if (typeof node.className !== 'undefined' && node.className.indexOf(name) !== -1) {
+    if (node.classList.contains('moshe')) {
+      return null;
+    }
+    if (node.classList.contains(name)) {
       return node;
     } else {
       return getParentNodeByClassName(node.parentNode, name);
@@ -16,7 +25,7 @@ const extension = () => {
   };
 
   const hidePost = (postContainer) => {
-    if (postContainer !== null) {
+    if (postContainer) {
       if (postContainer.className.indexOf('opContainer') !== -1) {
         if (window.location.href.indexOf('thread') === -1) {
           postContainer.parentNode.className += ' post-hidden';
@@ -152,10 +161,12 @@ const extension = () => {
 
   const main = () => {
     getMemeFlags();
+    // add nav links
     const navLinkSections = document.getElementsByClassName('navLinks');
     for (let i=0; i<navLinkSections.length; i++) {
       addNavLinks(navLinkSections[i], i);
     }
+    // watch for new threads
     const observer = new MutationObserver(mutationCallback);
     observer.observe(
         document.getElementsByClassName('thread')[0],
