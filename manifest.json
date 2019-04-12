@@ -1,5 +1,6 @@
 {
-  "name": "Memeflag delouser",
+  "name": "Memeflag Delouser",
+  "short_name": "DeMemeFlag",
   "version": "1.2",
   "manifest_version": 2,
   "description": "This extension automatically hides and marks posters who use memeflags when posting to hide their country of origin.",
@@ -22,12 +23,6 @@
       ],
       "css": [
         "src/inject/inject.css"
-      ]
-    },
-    {
-      "matches": [
-        "http://*.4chan.org/*",
-        "https://*.4chan.org/*"
       ],
       "js": [
         "src/inject/inject.js"
