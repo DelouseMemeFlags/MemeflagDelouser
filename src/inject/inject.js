@@ -40,12 +40,14 @@ const extension = () => {
     }
   };
 
+  /**
+   * Returns the ID number of a post
+   * @param {Node} nameBlock DOM Node.
+   * @return {string} The post ID.
+   */
   const getPostID = (nameBlock) => {
-    if (nameBlock !== null) {
-      const postId = nameBlock.getElementsByClassName('postNum')[0].lastElementChild.text;
-      if (memeFlagIDs.indexOf(postId) === -1) {
-        memeFlagIDs.push(postId);
-      }
+    if (nameBlock) {
+      return nameBlock.getElementsByClassName('postNum')[0].lastElementChild.text;
     }
   };
 
