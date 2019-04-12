@@ -24,14 +24,18 @@ const extension = () => {
     }
   };
 
+  /**
+   * Hides posts
+   * @param {Node} postContainer DOM Node.
+   */
   const hidePost = (postContainer) => {
     if (postContainer) {
-      if (postContainer.className.indexOf('opContainer') !== -1) {
-        if (window.location.href.indexOf('thread') === -1) {
-          postContainer.parentNode.className += ' post-hidden';
+      if (postContainer.classList.contains('opContainer')) {
+        if (window.location.href.includes('thread')) {
+          postContainer.parentNode.classList.add('post-hidden');
         }
       } else {
-        postContainer.className += ' moshe post-hidden';
+        postContainer.classList.add('moshe', 'post-hidden');
       }
     }
   };
