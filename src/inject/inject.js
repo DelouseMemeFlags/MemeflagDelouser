@@ -1,7 +1,7 @@
 const extension = () => {
   const starSVG = '<svg xmlns="http://www.w3.org/2000/svg" class="star" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 47 55"><defs><style>.a{clip-path:url(#b);}.b{fill:none;}.c,.d{stroke:none;}.d{fill:blue;}</style><clipPath id="b"><rect width="47" height="55"/></clipPath></defs><g id="a" class="a"><g class="b" transform="translate(-30.603 -40.421)"><path class="c" d="M30.6,54.609h46.98L53.748,95.155Z"/><path class="d" d="M 35.76966857910156 57.609375 L 53.78603363037109 89.17063140869141 L 72.33926391601563 57.609375 L 35.76966857910156 57.609375 M 30.602783203125 54.609375 L 77.582763671875 54.609375 L 53.7479248046875 95.15528869628906 L 30.602783203125 54.609375 Z"/></g><g class="b" transform="translate(-62.438 39.884) rotate(-60)"><path class="c" d="M30.6,54.609h46.98L53.748,95.228Z"/><path class="d" d="M 35.76509094238281 57.60936737060547 L 53.78605270385742 89.23533630371094 L 72.34402465820313 57.60936737060547 L 35.76509094238281 57.60936737060547 M 30.602783203125 54.60936737060547 L 77.582763671875 54.60936737060547 L 53.7479248046875 95.22802734375 L 30.602783203125 54.60936737060547 Z"/></g></g></svg>';
-  const memeFlagIDs = [];
   const memeFlagCount = document.createElement('span');
+  let memeFlagIDs = [];
   let showThemToggle = true;
 
   const getParentNodeByClassName = (node, name) => {
@@ -27,7 +27,7 @@ const extension = () => {
     }
   };
 
-  const concentrateThem = (nameBlock) => {
+  const getPostID = (nameBlock) => {
     if (nameBlock !== null) {
       const postId = nameBlock.getElementsByClassName('postNum')[0].lastElementChild.text;
       if (memeFlagIDs.indexOf(postId) === -1) {
@@ -37,21 +37,29 @@ const extension = () => {
   };
 
   const getMemeFlags = () => {
+    // find meme flags
     const flags = document.getElementsByClassName('countryFlag');
-    for (let i=(memeFlagIDs.length*2); i<flags.length; i++) {
+    // all .countryFlag tags are meme flags, regular flags are just .flag
+    for (let i = 0; i < flags.length; i++) {
       const flag = flags[i];
-      if (flag.src.indexOf('troll') !== -1) {
-        hidePost(getParentNodeByClassName(flag, 'postContainer'));
-        concentrateThem(flag.parentNode.parentNode);
-        flag.parentNode.innerHTML += starSVG;
-      }
-      memeFlagCount.innerHTML = memeFlagIDs.length;
+      // add the post id number to memeFlagIDs array
+      const postID = getPostID(flag.parentNode.parentNode);
+      if (postID) memeFlagIDs.push(postID);
+      // hide the post
+      hidePost(getParentNodeByClassName(flag, 'postContainer'));
+      // set the new flag image
+      flag.parentNode.innerHTML += starSVG;
     }
 
-    const schemers = document.getElementsByClassName('flag-il');
-    for (let i=0; i<schemers.length; i++) {
-      schemers[i].parentNode.innerHTML += starSVG.replace('star', 'star half');
+    // find il country code flags
+    const ilFlags = document.getElementsByClassName('flag-il');
+    for (let i = 0; i < ilFlags.length; i++) {
+      ilFlags[i].parentNode.innerHTML += starSVG.replace('star', 'star half');
     }
+
+    // update meme flag count
+    memeFlagIDs = [...new Set(memeFlagIDs)];  // remove duplicate IDs
+    memeFlagCount.innerHTML = memeFlagIDs.length;
   };
 
   const mutationCallback = (list, observer) => {
