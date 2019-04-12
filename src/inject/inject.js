@@ -77,7 +77,10 @@ const extension = () => {
     memeFlagCount.innerHTML = memeFlagIDs.length;
   };
 
-  const mutationCallback = (list, observer) => {
+  /**
+   * Called when new threads are detected
+   */
+  const mutationCallback = () => {
     getMemeFlags();
   };
 
