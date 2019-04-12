@@ -138,22 +138,19 @@ const extension = () => {
         .addEventListener('click', onQuoteThem);
   };
 
-  const readyStateCheckInterval = setInterval(() => {
-    if (document.readyState === 'complete') {
-      clearInterval(readyStateCheckInterval);
-      getMemeFlags();
-      const navLinkSections = document.getElementsByClassName('navLinks');
-
-      for (let i=0; i<navLinkSections.length; i++) {
-        addNavLinks(navLinkSections[i], i);
-      }
-      const observer = new MutationObserver(mutationCallback);
-      observer.observe(
-          document.getElementsByClassName('thread')[0],
-          {attributes: false, childList: true, subtree: false}
-      );
+  const main = () => {
+    getMemeFlags();
+    const navLinkSections = document.getElementsByClassName('navLinks');
+    for (let i=0; i<navLinkSections.length; i++) {
+      addNavLinks(navLinkSections[i], i);
     }
-  }, 300);
+    const observer = new MutationObserver(mutationCallback);
+    observer.observe(
+        document.getElementsByClassName('thread')[0],
+        {attributes: false, childList: true, subtree: false}
+    );
+  };
+  main();
 };
 
 if (typeof InstallTrigger !== 'undefined') {
