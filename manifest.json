@@ -10,7 +10,6 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "default_locale": "en",
   "permissions": [
     "http://*.4chan.org/*",
     "https://*.4chan.org/*"
