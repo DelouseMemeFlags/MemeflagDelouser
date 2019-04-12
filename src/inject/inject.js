@@ -84,26 +84,24 @@ const extension = () => {
     getMemeFlags();
   };
 
-  const onShowThem = (e) => {
+  /**
+   * Hide / Unhide shills
+   */
+  const onShowThem = () => {
+    // toggle post-hidden class
     const them = document.getElementsByClassName('moshe');
-    const showThemLinks = document.getElementsByClassName('showThem');
-    if (showThemToggle) {
-      for (let i=0; i<them.length; i++) {
-        them[i].className = them[i].className.replace(' post-hidden', '');
-      }
-      for (let i=0; i<showThemLinks.length; i++) {
-        showThemLinks[i].innerHTML = 'Hide Shills';
-      }
-      showThemToggle = false;
-    } else {
-      for (let i=0; i<them.length; i++) {
-        them[i].className += ' post-hidden';
-      }
-      for (let i=0; i<showThemLinks.length; i++) {
-        showThemLinks[i].innerHTML = 'Unhide Shills';
-      }
-      showThemToggle = true;
+    for (let i=0; i<them.length; i++) {
+      them[i].classList.toggle('post-hidden');
     }
+    // amend link label
+    const showThemLinks = document.getElementsByClassName('showThem');
+    let label = 'Unhide Shills';
+    if (showThemToggle) label = 'Hide Shills';
+    for (let i=0; i<showThemLinks.length; i++) {
+      showThemLinks[i].innerHTML = label;
+    }
+    // toggle state
+    showThemToggle = !showThemToggle;
   };
 
   const onBringToTop = (e) => {
