@@ -1,10 +1,10 @@
-const extension = function() {
+const extension = () => {
   const star = '<svg xmlns="http://www.w3.org/2000/svg" class="star" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 47 55"><defs><style>.a{clip-path:url(#b);}.b{fill:none;}.c,.d{stroke:none;}.d{fill:blue;}</style><clipPath id="b"><rect width="47" height="55"/></clipPath></defs><g id="a" class="a"><g class="b" transform="translate(-30.603 -40.421)"><path class="c" d="M30.6,54.609h46.98L53.748,95.155Z"/><path class="d" d="M 35.76966857910156 57.609375 L 53.78603363037109 89.17063140869141 L 72.33926391601563 57.609375 L 35.76966857910156 57.609375 M 30.602783203125 54.609375 L 77.582763671875 54.609375 L 53.7479248046875 95.15528869628906 L 30.602783203125 54.609375 Z"/></g><g class="b" transform="translate(-62.438 39.884) rotate(-60)"><path class="c" d="M30.6,54.609h46.98L53.748,95.228Z"/><path class="d" d="M 35.76509094238281 57.60936737060547 L 53.78605270385742 89.23533630371094 L 72.34402465820313 57.60936737060547 L 35.76509094238281 57.60936737060547 M 30.602783203125 54.60936737060547 L 77.582763671875 54.60936737060547 L 53.7479248046875 95.22802734375 L 30.602783203125 54.60936737060547 Z"/></g></g></svg>';
   const telAvivIds = [];
   const flaggotCount = document.createElement('span');
   let showThemToggle = true;
 
-  const getParentNodeByClassName = function(node, name) {
+  const getParentNodeByClassName = (node, name) => {
     if (node === null || node.className.indexOf('moshe') !== -1) {
       return null;
     }
@@ -15,7 +15,7 @@ const extension = function() {
     }
   };
 
-  const hidePost = function(postContainer) {
+  const hidePost = (postContainer) => {
     if (postContainer !== null) {
       if (postContainer.className.indexOf('opContainer') !== -1) {
         if (window.location.href.indexOf('thread') === -1) {
@@ -27,7 +27,7 @@ const extension = function() {
     }
   };
 
-  const concentrateThem = function(nameBlock) {
+  const concentrateThem = (nameBlock) => {
     if (nameBlock !== null) {
       const postId = nameBlock.getElementsByClassName('postNum')[0].lastElementChild.text;
       if (telAvivIds.indexOf(postId) === -1) {
@@ -36,7 +36,7 @@ const extension = function() {
     }
   };
 
-  const getMemeFlags = function() {
+  const getMemeFlags = () => {
     const flags = document.getElementsByClassName('countryFlag');
 
     for (let i=(telAvivIds.length*2); i<flags.length; i++) {
@@ -55,11 +55,11 @@ const extension = function() {
     }
   };
 
-  const mutationCallback = function(list, observer) {
+  const mutationCallback = (list, observer) => {
     getMemeFlags();
   };
 
-  const onShowThem = function(e) {
+  const onShowThem = (e) => {
     const them = document.getElementsByClassName('moshe');
     const showThemLinks = document.getElementsByClassName('showThem');
     if (showThemToggle) {
@@ -81,7 +81,7 @@ const extension = function() {
     }
   };
 
-  const onBringToTop = function(e) {
+  const onBringToTop = (e) => {
     const them = document.getElementsByClassName('moshe');
     const firstPost = document.getElementsByClassName('replyContainer')[0];
     const fpParent = firstPost.parentNode;
@@ -93,7 +93,7 @@ const extension = function() {
     }
   };
 
-  const onQuoteThem = function(e) {
+  const onQuoteThem = (e) => {
     togglePostFormLink.firstElementChild.click();
     const body = postForm.getElementsByTagName('textarea')[0];
     let quoteStr = '';
@@ -104,7 +104,7 @@ const extension = function() {
     body.focus();
   };
 
-  const addNavLinks = function(navLinkSection, iteration) {
+  const addNavLinks = (navLinkSection, iteration) => {
     const showThem = document.createElement('a');
     const bringToTop = document.createElement('a');
     const quoteThem = document.createElement('a');
@@ -138,7 +138,7 @@ const extension = function() {
         .addEventListener('click', onQuoteThem);
   };
 
-  const readyStateCheckInterval = setInterval(function() {
+  const readyStateCheckInterval = setInterval(() => {
     if (document.readyState === 'complete') {
       clearInterval(readyStateCheckInterval);
       getMemeFlags();
