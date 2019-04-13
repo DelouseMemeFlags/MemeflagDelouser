@@ -108,14 +108,16 @@ const extension = () => {
    * Bring shill posts to top
    */
   const onBringToTop = () => {
-    const them = document.getElementsByClassName('moshe');
     const firstPost = document.getElementsByClassName('replyContainer')[0];
     const fpParent = firstPost.parentNode;
-    for (let i=0; i<them.length; i++) {
-      fpParent.insertBefore(them[i], firstPost);
-    }
-    if (showThemToggle) {
-      onShowThem();
+    if (fpParent) {
+      const them = document.getElementsByClassName('moshe');
+      for (let i=0; i<them.length; i++) {
+        fpParent.insertBefore(them[i], firstPost);
+      }
+      if (showThemToggle) {
+        onShowThem();
+      }
     }
   };
 
