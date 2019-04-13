@@ -174,11 +174,14 @@ const extension = () => {
 
   const main = () => {
     getMemeFlags();
-    // add nav links
+    // add nav links to catalogue and mobile
     const navLinkSections = document.getElementsByClassName('navLinks');
     for (let i=0; i<navLinkSections.length; i++) {
       addNavLinks(navLinkSections[i], i);
     }
+    // add nav links to desktop ctrl bar
+    const ctrlTop = document.getElementById('ctrl-top');
+    if (ctrlTop) addNavLinks(ctrlTop, 1);
     // watch for new threads
     const observer = new MutationObserver(mutationCallback);
     observer.observe(
