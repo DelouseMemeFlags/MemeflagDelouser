@@ -31,3 +31,6 @@ div:not(.post-hidden) > .opContainer .star {
 .half.star {
   opacity: .3;
 }
+.shillCnt {
+  font-weight: bold;
+}

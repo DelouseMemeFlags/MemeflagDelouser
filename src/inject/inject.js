@@ -1,8 +1,9 @@
 var extension = function() {
 	var star = '<svg xmlns="http://www.w3.org/2000/svg" class="star" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 47 55"><defs><style>.a{clip-path:url(#b);}.b{fill:none;}.c,.d{stroke:none;}.d{fill:blue;}</style><clipPath id="b"><rect width="47" height="55"/></clipPath></defs><g id="a" class="a"><g class="b" transform="translate(-30.603 -40.421)"><path class="c" d="M30.6,54.609h46.98L53.748,95.155Z"/><path class="d" d="M 35.76966857910156 57.609375 L 53.78603363037109 89.17063140869141 L 72.33926391601563 57.609375 L 35.76966857910156 57.609375 M 30.602783203125 54.609375 L 77.582763671875 54.609375 L 53.7479248046875 95.15528869628906 L 30.602783203125 54.609375 Z"/></g><g class="b" transform="translate(-62.438 39.884) rotate(-60)"><path class="c" d="M30.6,54.609h46.98L53.748,95.228Z"/><path class="d" d="M 35.76509094238281 57.60936737060547 L 53.78605270385742 89.23533630371094 L 72.34402465820313 57.60936737060547 L 35.76509094238281 57.60936737060547 M 30.602783203125 54.60936737060547 L 77.582763671875 54.60936737060547 L 53.7479248046875 95.22802734375 L 30.602783203125 54.60936737060547 Z"/></g></g></svg>';
-	let telAvivIds = [];
+	var telAvivIds = [];
+	var telAvivUIds = [];
 	var flaggotCount = document.createElement('span');
-	let showThemToggle = true;
+	var showThemToggle = true;
 	
 	var getParentNodeByClassName = function(node, name) {
 		if (node === null || node.className.indexOf('moshe') !== -1)
@@ -30,30 +31,44 @@ var extension = function() {
 	var concentrateThem = function(nameBlock) {
 		if (nameBlock !== null) {
 			var postId = nameBlock.getElementsByClassName('postNum')[0].lastElementChild.text;
+			var userId = nameBlock.getElementsByClassName('posteruid')[0].className.replace('posteruid id_', '');
 			if (telAvivIds.indexOf(postId) === -1) {
 				telAvivIds.push(postId);
+			}
+			if (telAvivUIds.indexOf(userId) === -1) {
+				telAvivUIds.push(userId);
 			}
 		}
 	};
 
 	var getMemeFlags = function() {
-		let flags = document.getElementsByClassName('countryFlag');
+		var flags = document.getElementsByClassName('countryFlag');
 		
-		for (let i=(telAvivIds.length*2); i<flags.length; i++) {
-			let flag = flags[i];
+		for (var i=(telAvivIds.length*2); i<flags.length; i++) {
+			var flag = flags[i];
 			if (flag.src.indexOf('troll') !== -1) {
 				hidePost(getParentNodeByClassName(flag, 'postContainer'));
 				concentrateThem(flag.parentNode.parentNode);
 				flag.parentNode.innerHTML += star;
 			}
-			flaggotCount.innerHTML = telAvivIds.length;
+			flaggotCount.innerHTML = ' / <span data-tip="shill posts" class="ts-ips shillCnt">' + telAvivIds.length + '</span> '+
+			                         '/ <span data-tip="unique shills" class="ts-ips shillCnt">' + telAvivUIds.length + '</span>';
 		}
 
-		let schemers = document.getElementsByClassName('flag-il');
-		for (let i=0; i<schemers.length; i++) {
+		var schemers = document.getElementsByClassName('flag-il');
+		for (var i=0; i<schemers.length; i++) {
 			schemers[i].parentNode.innerHTML += star.replace('star', 'star half');
 		}
 	};
+
+	var getMemeQuoteLinks = function() {
+		var allQuoteLinks = document.getElementsByClassName('quotelink');
+		for (var i=0; i<allQuoteLinks.length; i++) {
+			if (telAvivIds.indexOf(allQuoteLinks[i].innerText.substring(2)) !== -1) {
+				allQuoteLinks[i].innerHTML += ' (✡️)';
+			}
+		}
+	}
 
 	var mutationCallback = function(list, observer) {
 		getMemeFlags();
@@ -63,30 +78,30 @@ var extension = function() {
 		var them = document.getElementsByClassName('moshe');
 		var showThemLinks = document.getElementsByClassName('showThem');
 		if (showThemToggle) {
-			for (let i=0; i<them.length; i++) {
+			for (var i=0; i<them.length; i++) {
 				them[i].className = them[i].className.replace(' post-hidden', '');
 			}
-			for (let i=0; i<showThemLinks.length; i++) {
+			for (var i=0; i<showThemLinks.length; i++) {
 				
 				showThemLinks[i].innerHTML = 'Hide Shills';
 			}
 			showThemToggle = false;
 		} else {
-			for (let i=0; i<them.length; i++) {
+			for (var i=0; i<them.length; i++) {
 				them[i].className += ' post-hidden';
 			}
-			for (let i=0; i<showThemLinks.length; i++) {
+			for (var i=0; i<showThemLinks.length; i++) {
 				showThemLinks[i].innerHTML = 'Unhide Shills';
 			}
 			showThemToggle = true;
 		}
-	};	
+	};
 
 	var onBringToTop = function(e) {
 		var them = document.getElementsByClassName('moshe');
 		var firstPost = document.getElementsByClassName('replyContainer')[0];
 		var fpParent = firstPost.parentNode;
-		for (let i=0; i<them.length; i++) {
+		for (var i=0; i<them.length; i++) {
 			fpParent.insertBefore(them[i], firstPost);
 		}
 		if (showThemToggle) {
@@ -97,8 +112,8 @@ var extension = function() {
 	var onQuoteThem = function(e) {
 		togglePostFormLink.firstElementChild.click();
 		var body = postForm.getElementsByTagName('textarea')[0];
-		let quoteStr = '';
-		for (let i=0; i<telAvivIds.length; i++) {
+		var quoteStr = '';
+		for (var i=0; i<telAvivIds.length; i++) {
 			quoteStr += '>>' + telAvivIds[i] + '\n';
 		}
 		body.value = quoteStr;
@@ -106,9 +121,15 @@ var extension = function() {
 	};
 
 	var addNavLinks = function(navLinkSection, iteration) {
+		console.log(navLinkSection);
+		if (typeof navLinkSection.appendChild !== 'function') {
+			navLinkSection = navLinkSection.parentNode;
+		}
+
 		var showThem = document.createElement('a');
 		var bringToTop = document.createElement('a');
 		var quoteThem = document.createElement('a');
+		
 		
 		showThem.setAttribute('href', 'javascript:void(0)');
 		showThem.setAttribute('id', 'showThem_' + iteration);
@@ -121,11 +142,11 @@ var extension = function() {
 		bringToTop.innerHTML = 'Bring Shills to Top';
 		quoteThem.innerHTML = 'Quote Them';
 		
-		navLinkSection.innerHTML += '[';
-		navLinkSection.appendChild(showThem);
-		navLinkSection.innerHTML += ' (';
+
 		navLinkSection.appendChild(flaggotCount);
-		navLinkSection.innerHTML += ')] [';
+		navLinkSection.innerHTML += '  &nbsp; [';
+		navLinkSection.appendChild(showThem);
+		navLinkSection.innerHTML += '] [';
 		navLinkSection.appendChild(bringToTop);
 		navLinkSection.innerHTML += '] [';
 		navLinkSection.appendChild(quoteThem);
@@ -144,9 +165,10 @@ var extension = function() {
 		if (document.readyState === "complete") {
 			clearInterval(readyStateCheckInterval);
 			getMemeFlags();
-			var navLinkSections = document.getElementsByClassName('navLinks');
+			getMemeQuoteLinks();
+			var navLinkSections = document.getElementsByClassName('thread-stats');
 			
-			for (let i=0; i<navLinkSections.length; i++) {
+			for (var i=0; i<navLinkSections.length; i++) {
 				addNavLinks(navLinkSections[i], i);
 			}
 			var observer = new MutationObserver(mutationCallback);
